@@ -58,7 +58,7 @@ class SingleLinkedList : CustomList {
             idx++
             cur = cur.next
         }
-        throw NoSuchElementException("No such element in the list: $element")
+        return -1
     }
 
     override fun remove(element: Int): Boolean {

@@ -25,8 +25,8 @@ interface CustomList : Iterable<Int> {
      */
     fun remove(element: Int): Boolean
     /*
-     * Return the index of the element in the list.
-     * Throw NoSuchElementException if the element was not found.
+     * Return the index of the element in the list starting from 0.
+     * Return -1 if the element was not found.
      */
     fun indexOf(element: Int): Int
     val size: Int
