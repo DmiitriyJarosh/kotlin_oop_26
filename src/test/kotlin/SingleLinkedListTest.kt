@@ -55,6 +55,24 @@ class SingleLinkedListTest {
         assertEquals(2, list.size)
     }
 
+
+    @Test
+    fun `add and remove elements` () {
+        list.add(1)
+        list.remove(1)
+        assertThrows(IndexOutOfBoundsException::class.java){
+            list[0]
+        }
+        list.add(2)
+        assertEquals(list[0], 2)
+        list.addFirst(1)
+        assertEquals(list[0], 1)
+        list.remove(1)
+        assertEquals(list[0], 2)
+        assertFalse(list.remove(1))
+    }
+
+
     @Test
     fun `contains works`() {
         list.add(1)
@@ -63,6 +81,13 @@ class SingleLinkedListTest {
         assertTrue(list.contains(1))
         assertFalse(list.contains(3))
     }
+
+    @Test
+    fun `contains in empty list`(){
+        assertFalse(list.contains(1))
+        assertFalse(list.contains(2))
+    }
+
 
     @Test
     fun `get by index`() {
@@ -76,6 +101,21 @@ class SingleLinkedListTest {
     }
 
     @Test
+    fun `get by index with complex add and remove`(){
+        list.add(1)
+        assertEquals(1, list[0])
+        list.addFirst(-1)
+        assertEquals(list[0], -1)
+        list.remove(-1)
+        assertEquals(list[0], 1)
+        list.remove(1)
+        assertThrows(IndexOutOfBoundsException::class.java){
+            list[0]
+        }
+    }
+
+
+    @Test
     fun `get throws exception on invalid index`() {
         list.add(10)
         list[0]
@@ -83,6 +123,29 @@ class SingleLinkedListTest {
         assertThrows(IndexOutOfBoundsException::class.java) {
             list[5]
         }
+    }
+
+
+    @Test
+    fun `iterator check`(){
+        list.add(1)
+        list.add(2)
+        list.add(3)
+        list.add(4)
+        list.add(5)
+        var count = 1
+        for (i in list){
+            assertEquals(i, count)
+            count++
+        }
+    }
+
+    @Test
+    fun `indexOf works after remove`(){
+        list.add(10)
+        assertEquals(0, list.indexOf(10))
+        list.remove(10)
+        assertEquals(-1, list.indexOf(10))
     }
 
     fun `indexOf works`() {

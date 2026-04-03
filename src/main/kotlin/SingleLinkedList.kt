@@ -46,7 +46,7 @@ class SingleLinkedList : CustomList {
 
     override operator fun get(index: Int): Int {
         var cur: Node? = beginNode
-        var ind: Int = 0
+        var ind = 0
         while(cur != null){
             if(ind == index){
                 return cur.value
