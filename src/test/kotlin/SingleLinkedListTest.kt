@@ -85,14 +85,16 @@ class SingleLinkedListTest {
         }
     }
 
+    @Test
     fun `indexOf works`() {
         list.add(10)
         list.add(20)
         list.add(30)
 
-        assertEquals(2, list.indexOf(20))
+        assertEquals(1, list.indexOf(20))
     }
 
+    @Test
     fun `set works`() {
         list.add(10)
         list.add(20)
@@ -100,5 +102,60 @@ class SingleLinkedListTest {
 
         list[2] = 5
         assertEquals(5, list[2])
+    }
+
+    @Test
+    fun `addFirst om empty list`() {
+        list.addFirst(10)
+        assertEquals(10, list[0])
+        assertEquals(1, list.size)
+    }
+
+    @Test
+    fun `remove first element from multiple` () {
+        list.add(1)
+        list.add(2)
+        list.add(3)
+        assertTrue(list.remove(1))
+        assertEquals(2, list.size)
+        assertEquals(2, list[0])
+    }
+
+    @Test
+    fun `get throws exception on negative index` () {
+        list.add(1)
+        assertThrows(IndexOutOfBoundsException::class.java) {
+            list[-1]
+        }
+    }
+
+    @Test
+    fun `indexOf non-existing element returns -1` () {
+        list.add(1)
+        list.add(2)
+        assertEquals(-1, list.indexOf(50))
+    }
+
+    @Test
+    fun `set updates middle element correctly`() {
+        list.add(1)
+        list.add(2)
+        list.add(3)
+        list[1] = 20
+        assertEquals(20, list[1])
+        assertEquals(1, list[0])
+    }
+
+    @Test
+    fun `iterator iterates all elements exactly once` () {
+        list.add(1)
+        list.add(2)
+        list.add(3)
+        val iterator = list.iterator()
+        assertTrue(iterator.hasNext())
+        assertEquals(1, iterator.next())
+        assertTrue(iterator.hasNext())
+        assertEquals(2, iterator.next())
+        assertFalse(iterator.hasNext())
     }
 }
