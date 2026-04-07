@@ -9,12 +9,12 @@ class SingleLinkedStack : Stack, SingleLinkedList() {
 
     override fun pop(): Int {
         val ret = peek()
-        remove(ret)
+        removeLast()
         return ret
     }
 
     override fun peek(): Int {
-        return node_insert?.value ?: throw IndexOutOfBoundsException("Stack is empty.")
+        return node_insert?.value ?: throw NoSuchElementException("Stack is empty.")
     }
 
     override val isEmpty: Boolean

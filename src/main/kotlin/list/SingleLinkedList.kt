@@ -2,7 +2,7 @@ package org.example.list
 
 open class SingleLinkedList : CustomList {
 
-    class Node (var value: Int, var next: Node? = null) {}
+    class Node (var value: Int, var next: Node? = null, var prev: Node? = null) {}
 
     var root: Node? = null
     var node_insert: Node? = null
@@ -19,7 +19,7 @@ open class SingleLinkedList : CustomList {
         }
 
     override fun add(element: Int) {
-        val newNode = Node(element, null)
+        val newNode = Node(element, null, node_insert)
         node_insert?.let{
             it.next = newNode
         } ?: run {
@@ -37,7 +37,7 @@ open class SingleLinkedList : CustomList {
     }
 
     override fun addFirst(element: Int) {
-        root = Node(element, root)
+        root = Node(element, root, null)
     }
 
     override operator fun get(index: Int): Int {
@@ -77,12 +77,24 @@ open class SingleLinkedList : CustomList {
             cur = cur.next ?: return false
         }
 
-        if (cur.next == null)
+        if (cur.next == null) {
             return false
-        else
+        } else {
             cur.next = cur.next?.next
-
+            cur?.next?.prev = cur
+        }
         return true
+    }
+
+    fun removeLast() {
+        if (node_insert == null)
+            throw NoSuchElementException("List is empty.")
+        if (node_insert == root) {
+            root = null
+        }
+
+        node_insert = node_insert?.prev
+        node_insert?.next = null
     }
 
     override fun iterator(): Iterator<Int> {
