@@ -1,6 +1,6 @@
 package org.example.list
 
-class SingleLinkedList : CustomList {
+open class SingleLinkedList : CustomList {
 
     class Node (var value: Int, var next: Node? = null) {}
 
