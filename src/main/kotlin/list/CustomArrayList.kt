@@ -39,10 +39,11 @@ class CustomArrayList(size: Int) : CustomList{
         if (size + 1 >= inner.size) {
             growSize()
         }
-        for (i in size - 1 downTo 1) {
+        for (i in size downTo 1) {
             swap(i-1, i)
         }
         inner[0] = element
+        curSize++
     }
     override fun remove(element: Int): Boolean {
         for (i in 0 until size) {
@@ -86,7 +87,7 @@ class CustomArrayList(size: Int) : CustomList{
         return object : Iterator<Int> {
             var index = 0
             override fun hasNext(): Boolean {
-                return index > size
+                return index < size
             }
 
             override fun next(): Int {

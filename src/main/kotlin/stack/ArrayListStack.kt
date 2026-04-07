@@ -20,6 +20,8 @@ class ArrayListStack : Stack, CustomList by CustomArrayList(DEFAULT_ARRAY_LIST_S
 
     // Get top item from stack
     override fun peek(): Int {
+        if (size <= 0)
+            throw NoSuchElementException("Stack is empty.")
         return get(size-1)
     }
 
