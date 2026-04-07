@@ -19,13 +19,13 @@ class SingleLinkedList : CustomList {
         }
 
     override fun add(element: Int) {
-        if (node_insert == null) {
-            root = Node(element, null)
-            node_insert = root
-        } else {
-            node_insert!!.next = Node(element, null)
-            node_insert = node_insert!!.next
+        val newNode = Node(element, null)
+        node_insert?.let{
+            it.next = newNode
+        } ?: run {
+            root = newNode
         }
+        node_insert = newNode
     }
 
     override operator fun set(index: Int, value: Int) {
@@ -62,18 +62,22 @@ class SingleLinkedList : CustomList {
     }
 
     override fun remove(element: Int): Boolean {
-        var cur: Node? = root ?: return false
+        var cur: Node = root ?: return false
 
-        if (cur!!.value == element) {
+        if (cur.value == element) {
             root = cur.next
             return true
         }
 
-        while (cur!!.next != null && cur.next!!.value != element) {
-            cur = cur.next
+        while (true) {
+            if (cur.next == null)
+                    return false
+            if (cur.next?.value == element)
+                break
+            cur = cur.next ?: return false
         }
 
-        if (cur!!.next == null)
+        if (cur.next == null)
             return false
         else
             cur.next = cur.next?.next
@@ -91,9 +95,7 @@ class SingleLinkedList : CustomList {
             }
 
             override fun next(): Int {
-                var ret = cur?.value
-                if (ret == null)
-                    throw NoSuchElementException("No such element in the list.")
+                var ret = cur?.value ?: throw NoSuchElementException("No such element in the list.")
 
                 cur = cur?.next
                 return ret
