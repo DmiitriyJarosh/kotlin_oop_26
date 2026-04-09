@@ -1,11 +1,9 @@
+import org.example.DoubleLinkedList
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.example.DoubleLinkedList
-
 
 class DoubleLinkedListTest {
-
     private lateinit var list: DoubleLinkedList
 
     @BeforeEach

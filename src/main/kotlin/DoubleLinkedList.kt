@@ -1,16 +1,15 @@
 package org.example
 
 class DoubleLinkedList : CustomList {
+    private var head: Node? = null
+    private var tail: Node? = null
+    private var _size: Int = 0
 
-        private var head: Node? = null
-        private var tail: Node? = null
-        private var _size: Int = 0
-
-        private class Node(
-            var value: Int,
-            var next: Node? = null,
-            var prev: Node? = null
-        )
+    private class Node(
+        var value: Int,
+        var next: Node? = null,
+        var prev: Node? = null,
+    )
 
     override val size: Int
         get() = _size
@@ -28,7 +27,10 @@ class DoubleLinkedList : CustomList {
         _size++
     }
 
-    override operator fun set(index: Int, value: Int) {
+    override operator fun set(
+        index: Int,
+        value: Int,
+    ) {
         checkIndex(index)
         getNode(index).value = value
     }
@@ -98,6 +100,7 @@ class DoubleLinkedList : CustomList {
     override fun iterator(): Iterator<Int> {
         return object : Iterator<Int> {
             private var current = head
+
             override fun hasNext(): Boolean {
                 if (current != null) return true
                 return false
@@ -114,7 +117,7 @@ class DoubleLinkedList : CustomList {
     companion object {
         fun doubleLinkedListOf(vararg items: Int) =
             items.fold(DoubleLinkedList()) { list, item ->
-                list.also{ it.add(item) }
+                list.also { it.add(item) }
             }
     }
 }
