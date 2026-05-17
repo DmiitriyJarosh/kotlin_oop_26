@@ -84,16 +84,16 @@ class SingleLinkedListTest {
             list[5]
         }
     }
-
+    @Test
     fun `indexOf works`() {
         list.add(10)
         list.add(20)
         list.add(30)
 
-        assertEquals(2, list.indexOf(20))
+        assertEquals(1, list.indexOf(20))
     }
-
-    fun `set works`() {
+    @Test
+    fun `set works`(){
         list.add(10)
         list.add(20)
         list.add(30)
@@ -101,4 +101,16 @@ class SingleLinkedListTest {
         list[2] = 5
         assertEquals(5, list[2])
     }
+    @Test
+    fun `remove first element`() {
+        list.add(1)
+        list.add(2)
+        list.add(3)
+
+        assertTrue(list.remove(1))
+
+        assertEquals(2, list.size)
+        assertEquals(2, list[0])
+        assertEquals(3, list[1])
+}
 }
