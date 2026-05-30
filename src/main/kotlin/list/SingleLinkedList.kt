@@ -1,53 +1,107 @@
 package org.example.list
 
-class SingleLinkedList : CustomList {
-    // don't use any java/kotlin internal datastructures like lists))
-    // write from scratch))
+open class SingleLinkedList(initSize: Int = 2) : CustomList {
 
+    private class Node(var value: Int, var next: Node? = null)
 
-    override val size: Int
-        get() = TODO("Implement this")
+    private var head: Node? = null
+    override var size: Int = 0
+        protected set
 
-    override fun add(element: Int) {
-        TODO("Implement this")
+    // Helper function
+    private fun getNodeAt(index: Int): Node {
+        checkIndex(index)
+        var current = head
+        repeat(index) {
+            current = current?.next
+        }
+        return current ?: throw IndexOutOfBoundsException()
     }
 
-    override operator fun set(index: Int, value: Int) {
-        TODO("Implement this")
+    override fun add(element: Int) {
+        if (head == null) head = Node(element)
+        else {
+            var current = head
+            while (current?.next != null) current = current.next
+            current?.next = Node(element)
+        }
+        size++
     }
 
     override fun addFirst(element: Int) {
-        TODO("Implement this")
+        head = Node(element, head)
+        size++
     }
 
-    override operator fun get(index: Int): Int {
-        TODO("Implement this")
+    override fun get(index: Int): Int {
+        return getNodeAt(index).value
+    }
+
+    override fun set(index: Int, value: Int) {
+        getNodeAt(index).value = value
     }
 
     override fun indexOf(element: Int): Int {
-        TODO("Implement this")
+        var current = head
+        var index = 0
+        while (current != null) {
+            if (current.value == element) return index
+            current = current.next
+            index++
+        }
+        return -1
     }
 
     override fun remove(element: Int): Boolean {
-        TODO("Implement this")
+        if (head == null) return false
+
+        if (head?.value == element) {
+            head = head?.next
+            size--
+            return true
+        }
+
+        var current = head
+        while (current?.next != null) {
+            if (current.next?.value == element) {
+                current.next = current.next?.next
+                size--
+                return true
+            }
+            current = current.next
+        }
+        return false
+    }
+
+    fun removeFirst(): Boolean {
+        if (head == null) throw NoSuchElementException("Stack is empty")
+        head = head?.next
+        size--
+        return true
     }
 
     override fun iterator(): Iterator<Int> {
         return object : Iterator<Int> {
-            override fun hasNext(): Boolean {
-                TODO("Implement this")
-            }
+            private var current = head
+
+            override fun hasNext(): Boolean = current != null
 
             override fun next(): Int {
-                TODO("Implement this")
+                if (!hasNext()) throw NoSuchElementException()
+                val value = current!!.value
+                current = current!!.next
+                return value
             }
         }
     }
 
+    private fun checkIndex(index: Int) {
+        if (index !in 0 until size) throw IndexOutOfBoundsException("Index $index, size $size")
+    }
+
     companion object {
-        fun singleLinkedListOf(vararg items: Int) =
-            items.fold(SingleLinkedList()) { list, item ->
-                list.also { it.add(item) }
-            }
+        fun singleLinkedListOf(vararg items: Int) = items.fold(SingleLinkedList(items.size)) { list, item ->
+            list.also { it.add(item) }
+        }
     }
 }
