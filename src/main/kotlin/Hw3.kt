@@ -4,16 +4,12 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 fun divideOrZero(a: Int, b: Int): Int {
-    TODO("IMPLEMENT")
+    return if (b == 0) 0 else a / b
 }
 
-class Supplier<T> {
+class Supplier<out T>
 
-}
-
-class Consumer<T> {
-
-}
+class Consumer<in T>
 
 var initCount = 0
 var initCount3 = 0
@@ -32,8 +28,17 @@ class DelegateOwner {
     }
 }
 
-class lazy2 {
-    // implement!
+class lazy2<out T>(private val initializer: () -> T) : ReadOnlyProperty<Any?, T> {
+    private object Uninitialized
+    private var value: Any? = Uninitialized
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        if (value === Uninitialized) {
+            value = initializer()
+        }
+        @Suppress("UNCHECKED_CAST")
+        return value as T
+    }
 }
 
 fun main() {
